@@ -6,6 +6,7 @@ const app = express();
 const port = 8000;
 
 app.use(expressLayouts);
+app.use(express.static("./assets"));
 
 //setup view engine
 app.set("view engine", "ejs");
