@@ -14,9 +14,10 @@ const port = 8000;
 
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static("./assets"));
 app.use(expressLayouts);
+
 //extract styles and scripts from subpages into layout
 app.set("layout extractStyles", true);
 app.set("layout extractScripts", true);
