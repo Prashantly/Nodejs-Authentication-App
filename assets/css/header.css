@@ -7,20 +7,22 @@ a {
   height: 55px;
   background-color: #508bfc;
   color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+  position: relative;
 }
 
 .logo {
   font-size: 20px;
   font-weight: bold;
+  position: absolute;
+  left: 8%;
 }
 
 .list {
   display: flex;
   align-items: center;
   list-style: none;
+  position: absolute;
+  right: 8%;
 }
 
 .listItem {

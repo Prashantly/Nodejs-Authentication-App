@@ -1,0 +1,34 @@
+body {
+  background-image: url("/images/bg1.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh; /* Set the body height to 100% of the viewport height */
+  margin: 0; /* Remove any default margin */
+  padding: 0; /* Remove any default padding */
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+.card {
+  margin-top: 100px; /* Adjust the margin-top value as needed */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.6
+  ); /* Adjust the background color and opacity as needed */
+}
+
+.user-details,
+.login-prompt,
+.btn {
+  opacity: 1; /* Initially hide the elements */
+}
+
+.btn-dark {
+  width: 150px;
+}

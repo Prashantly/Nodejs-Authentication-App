@@ -2,6 +2,7 @@
   <span class="logo">
     <a class="link" to="/"> Auth App </a>
   </span>
+  <% if(locals.user){ %>
   <ul class="list">
     <li class="listItem profile-pic">
       <img
@@ -10,8 +11,9 @@
         class="avatar"
       />
     </li>
-    <li class="listItem"><a>John Doe</a></li>
+    <li class="listItem text-capitalize"><a><%= user.name%></a></li>
     <li class="listItem"><a>Logout</a></li>
     <li class="listItem resetbtn"><a>Reset Password</a></li>
   </ul>
+  <%}%>
 </div>

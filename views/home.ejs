@@ -1,1 +1,30 @@
+<link rel="stylesheet" href="/css/home.css" />
+<div class="container">
+  <div class="card">
+    <div class="card-body text-center">
+      <h2 class="card-title mb-3">Welcome to the Website!</h2>
+      <h4 class="card-text mb-3">This is a Nodejs Authentication website.</h4>
 
+      <% if (locals.user) { %>
+      <div class="user-details">
+        <h3
+          class="welcome-message text-capitalize animate__animated animate__pulse animate__infinite infinite animate__slow 2s"
+        >
+          Welcome, <%= user.name %>!
+        </h3>
+        <p class="user-email my-2">Your E-mail : <%= user.email %></p>
+        <p class="user-status">You are now logged in.</p>
+      </div>
+      <% } else { %>
+      <p
+        class="login-prompt animate__animated animate__headShake animate__infinite infinite animate__slow 1.5s fs-5"
+      >
+        Please log in to continue.
+      </p>
+      <a class="btn btn-dark my-3 fw-bold" href="/users/sign-in" role="button"
+        >Log In</a
+      >
+      <% } %>
+    </div>
+  </div>
+</div>
