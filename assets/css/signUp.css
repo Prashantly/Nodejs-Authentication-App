@@ -1,0 +1,45 @@
+.field-holder {
+  position: relative;
+}
+
+.field-holder input {
+  padding: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  border: 1px solid #666;
+  border-radius: 5px;
+}
+
+.field-holder label {
+  position: absolute;
+  top: 0.57rem;
+  left: 0.73rem;
+  font-size: 1.16rem;
+  padding: 0 5px;
+  color: #666;
+  transition: 0.4s;
+  pointer-events: none;
+}
+
+.field-holder input:focus {
+  border: 1px solid #508bfc;
+}
+
+.field-holder input:focus ~ label,
+.field-holder input:valid ~ label {
+  top: -0.6rem;
+  font-size: 0.9rem;
+  color: #508bfc;
+  background-color: #fff;
+}
+
+.google {
+  background-color: #dd4b39;
+  color: white;
+}
+
+.google:hover {
+  background-color: #dd4b39;
+  color: #fff;
+}

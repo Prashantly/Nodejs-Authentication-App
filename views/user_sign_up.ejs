@@ -1,1 +1,52 @@
-<h1>Sign Up</h1>
+<link rel="stylesheet" href="/css/signUp.css" />
+<section
+  class="vh-100 d-flex align-items-center justify-content-center"
+  style="background-color: #508bfc"
+>
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <!-- card -->
+        <div class="card shadow-2-strong" style="border-radius: 1rem">
+          <div class="card-body p-5 text-center">
+            <h3 class="mb-4" style="color: #508bfc">Sign Up</h3>
+
+            <form action="/users/create" method="POST">
+              <div class="field-holder mb-4">
+                <input type="text" id="name" name="name" required />
+                <label for="name">Name</label>
+              </div>
+              <div class="field-holder mb-4">
+                <input type="email" id="email" name="email" required />
+                <label for="email">Email</label>
+              </div>
+              <div class="field-holder mb-4">
+                <input type="password" id="password" name="password" required />
+                <label for="password">Password</label>
+              </div>
+              <div class="field-holder mb-4">
+                <input
+                  type="password"
+                  id="confirm-password"
+                  name="confirm-password"
+                  required
+                />
+                <label for="confirm-password">Confirm Password</label>
+              </div>
+
+              <button class="btn btn-primary btn-lg btn-block" type="submit">
+                Register
+              </button>
+            </form>
+
+            <hr class="my-4" />
+
+            <a class="btn btn-lg btn-block google" href="#" type="submit">
+              <i class="fab fa-google"></i> Sign in with Google
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
