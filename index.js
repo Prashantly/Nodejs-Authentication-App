@@ -7,6 +7,7 @@ const db = require("./config/mongoose");
 const session = require("express-session");
 const passport = require("passport");
 const passportLocal = require("./config/passport-local-strategy");
+const MongoStore = require("connect-mongo");
 
 const app = express();
 
@@ -26,15 +27,25 @@ app.set("layout extractScripts", true);
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
+const uri = "mongodb://127.0.0.1/Auth_app";
+
+const store = MongoStore.create({
+  mongoUrl: uri,
+  collectionName: "sessions",
+  autoRemove: "disabled",
+});
+
+//mongo store is used to store the session cookie in the db
 app.use(
   session({
     name: "Authentication",
     secret: "nodeAuth",
-    saveUninitialized: false,
-    resave: false,
+    saveUninitialized: false, // don't create session until something stored
+    resave: false, //don't save session if unmodified
     cookie: {
       maxAge: 1000 * 60 * 100,
     },
+    store: store,
   })
 );
 

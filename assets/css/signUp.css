@@ -17,9 +17,10 @@ body {
   width: 100%;
   box-sizing: border-box;
   outline: none;
-  border: 1px solid #666;
+  border: 1px solid #303030;
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.5);
+  font-size: 18px;
 }
 
 .field-holder label {
@@ -35,6 +36,7 @@ body {
 
 .field-holder input:focus {
   border: 1px solid #508bfc;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .field-holder input:focus ~ label,
@@ -42,7 +44,7 @@ body {
   top: -0.76rem;
   font-size: 1rem;
   color: #508bfc;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: #fff;
 }
 
 .google {
