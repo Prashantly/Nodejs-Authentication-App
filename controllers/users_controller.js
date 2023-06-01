@@ -64,3 +64,15 @@ module.exports.create = async (req, res) => {
 module.exports.createSession = function (req, res) {
   return res.redirect("/");
 };
+
+// destroy session or sign out or clears the cookie
+module.exports.destroySession = function (req, res) {
+  req.logout((err) => {
+    // Clear the authenticated user's session data
+    if (err) {
+      return next(err);
+    }
+    // req.flash("success", "You are now signed out");
+    return res.redirect("/");
+  });
+};
