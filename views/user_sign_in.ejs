@@ -1,37 +1,56 @@
 <link rel="stylesheet" href="/css/signUp.css" />
+
 <section
-  class="vh-100 d-flex align-items-center justify-content-center"
-  style="background-color: #508bfc"
+  class="d-flex align-items-center justify-content-center"
+  style="background-color: transparent"
 >
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
+  <div class="container py-5">
+    <div class="row d-flex justify-content-center align-items-center">
       <div class="col-12 col-md-8 col-lg-6 col-xl-5">
         <!-- card -->
-        <div class="card shadow-2-strong" style="border-radius: 1rem">
+        <div
+          class="card shadow-2-strong"
+          style="
+            border-radius: 1rem;
+            background-color: rgba(255, 255, 255, 0.4);
+          "
+        >
           <div class="card-body p-5 text-center">
-            <h3 class="fw-bold mb-2 text-uppercase" style="color: #508bfc">
-              Login
-            </h3>
-            <p class="text-dark-50 mb-5">
+            <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+            <p class="text-dark-50 mb-5 fw-bold">
               Please enter your E-mail and password!
             </p>
 
             <!-- form -->
             <form action="/users/create-session" method="POST">
               <div class="field-holder mb-4">
-                <input type="email" id="email" name="email" required />
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  class="form-control"
+                />
                 <label for="email">Email</label>
               </div>
               <div class="field-holder mb-4">
-                <input type="password" id="password" name="password" required />
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  required
+                  class="form-control"
+                />
                 <label for="password">Password</label>
               </div>
 
               <p class="small mb-3 pb-lg-2">
-                <a class="text-primary-50 fs-6" href="#!">Forgot password?</a>
+                <a class="text-primary-50 fs-5 fw-bold" href="#!"
+                  >Forgot password?</a
+                >
               </p>
 
-              <button class="btn btn-primary btn-lg btn-block" type="submit">
+              <button class="btn btn-dark btn-lg btn-block lgn" type="submit">
                 Login
               </button>
             </form>
@@ -41,13 +60,13 @@
               <i class="fab fa-google"></i> Sign in with Google
             </a>
 
-            <div class="my-4">
+            <div class="my-4 fs-5">
               <p>
                 Don't have an account?
                 <a
                   href="/users/sign-up"
                   class="fw-bold"
-                  style="color: rgb(7 21 88)"
+                  style="color: rgba(4, 4, 5, 0.895)"
                   >Sign Up</a
                 >
               </p>

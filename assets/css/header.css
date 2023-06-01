@@ -8,6 +8,7 @@ a {
   background-color: #508bfc;
   color: white;
   position: relative;
+  box-sizing: border-box;
 }
 
 .logo {
