@@ -21,6 +21,7 @@ body {
     255,
     0.6
   ); /* Adjust the background color and opacity as needed */
+  padding: 30px 0;
 }
 
 .user-details,

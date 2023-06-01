@@ -8,15 +8,16 @@ passport.use(
   new LocalStrategy(
     {
       usernameField: "email",
+      passReqToCallback: true, // Pass the req object to the callback function
     },
-    async function (email, password, done) {
+    async function (req, email, password, done) {
       try {
         //find user and establish the identity
         const user = await User.findOne({ email: email });
 
         if (!user) {
           //user not found
-          // req.flash("error", "Invalid Username or Password");
+          req.flash("error", "Invalid Username or Password");
           console.log("Invalid username or password");
           return done(null, false);
         }
@@ -26,7 +27,7 @@ passport.use(
 
         if (!passwordMatch) {
           //password not match
-          // req.flash("error", "Invalid Username or Password");
+          req.flash("error", "Invalid Username or Password");
           console.log("Invalid username or password");
           return done(null, false);
         }
@@ -66,7 +67,7 @@ passport.checkAuthentication = function (req, res, next) {
   }
 
   //if user is not signed in
-  return res.redirect("/users/sign-in");
+  return res.redirect("/");
 };
 
 passport.setAuthenticatedUser = function (req, res, next) {

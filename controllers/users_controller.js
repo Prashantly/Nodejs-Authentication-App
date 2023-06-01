@@ -26,7 +26,7 @@ module.exports.create = async (req, res) => {
 
     // Password validation
     if (password !== confirm_password) {
-      // req.flash("error", "Passwords do not match");
+      req.flash("error", "Passwords do not match");
       return res.redirect("back");
     }
 
@@ -34,8 +34,7 @@ module.exports.create = async (req, res) => {
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      // req.flash("error", "Email already registered!");
-      console.log("error", "Email already registered!");
+      req.flash("error", "Email already registered!");
       return res.redirect("back");
     }
 
@@ -51,8 +50,7 @@ module.exports.create = async (req, res) => {
     });
 
     // Success message and redirect
-    // req.flash("success", "Account created!");
-    console.log("success", "Account created!");
+    req.flash("success", "Account created!");
     return res.redirect("/users/sign-in");
   } catch (err) {
     console.log(err);
@@ -62,6 +60,8 @@ module.exports.create = async (req, res) => {
 
 // sign-in and create session for the user
 module.exports.createSession = function (req, res) {
+  //success flash message
+  req.flash("success", "You are now logged in!");
   return res.redirect("/");
 };
 
@@ -72,7 +72,7 @@ module.exports.destroySession = function (req, res) {
     if (err) {
       return next(err);
     }
-    // req.flash("success", "You are now signed out");
+    req.flash("success", "You are now signed out");
     return res.redirect("/");
   });
 };
