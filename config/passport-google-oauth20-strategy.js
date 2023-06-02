@@ -6,7 +6,7 @@ const GOOGLE_CLIENT_ID =
   "512969332980-d667iiq64s2klca4qnq6ffbrljgi9r3j.apps.googleusercontent.com";
 const GOOGLE_CLIENT_SECRET = "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";
 
-//tell passport to use new strategy for google login
+// Tell passport to use new strategy for Google login
 passport.use(
   new GoogleStrategy(
     {
@@ -14,42 +14,29 @@ passport.use(
       clientSecret: GOOGLE_CLIENT_SECRET,
       callbackURL: "http://localhost:8000/users/auth/google/callback",
     },
-    function (accessToken, refreshToken, profile, done) {
-      //find user
-      User.findOne({
-        email: profile.emails[0].value.exec(function (err, user) {
-          if (err) {
-            console.log("Error in google strategy-passport", err);
-            return;
-          }
+    async function (accessToken, refreshToken, profile, done) {
+      try {
+        // Find user
+        const user = await User.findOne({ email: profile.emails[0].value });
 
-          console.log(profile);
+        // console.log(accessToken, refreshToken);
+        // console.log(profile);
 
-          if (user) {
-            //if found, set this use as req.user
-            return done(null, user);
-          } else {
-            //if not found, create user and set it as req.user
-            User.create(
-              {
-                name: profile.displayName,
-                email: profile.emails[0].value,
-                password: crypto.randomBytes(20).toString("hex"),
-              },
-              function (err, user) {
-                if (err) {
-                  console.log(
-                    "Error in creating user google strategy-passport",
-                    err
-                  );
-                  return;
-                }
-                return done(null, user);
-              }
-            );
-          }
-        }),
-      });
+        if (user) {
+          return done(null, user);
+        } else {
+          // If user is not found, create the user and set it as req.user
+          const newUser = await User.create({
+            name: profile.displayName,
+            email: profile.emails[0].value,
+            password: crypto.randomBytes(20).toString("hex"),
+          });
+          return done(null, newUser);
+        }
+      } catch (err) {
+        console.log("Error in Google strategy-passport", err);
+        return done(err);
+      }
     }
   )
 );
