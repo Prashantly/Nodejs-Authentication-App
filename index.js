@@ -1,3 +1,4 @@
+require("dotenv").config(); // Require and configure dotenv
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");

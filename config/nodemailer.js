@@ -1,10 +1,10 @@
 require("dotenv").config();
-const ejs = require("ejs");
+const Mailgen = require("mailgen");
 const nodemailer = require("nodemailer");
 const path = require("path");
 
-// console.log(process.env.EMAIL);
-// console.log(process.env.PASSWORD);
+console.log(process.env.EMAIL);
+console.log(process.env.PASSWORD);
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -17,23 +17,15 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-let renderTemplate = (data, relativePath) => {
-  let mailHTML;
-  ejs.renderFile(
-    path.join(__dirname, "../views/mailers", relativePath),
-    data,
-    function (err, template) {
-      if (err) {
-        console.log("error in rendering template");
-        return;
-      }
-      mailHTML = template;
-    }
-  );
-  return mailHTML;
-};
+const mailGenerator = new Mailgen({
+  theme: "neopolitan",
+  product: {
+    name: "Authentication app",
+    link: "http://localhost:8000",
+  },
+});
 
 module.exports = {
   transporter,
-  renderTemplate,
+  mailGenerator,
 };

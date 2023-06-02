@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const { transporter, mailGenerator } = require("../config/nodemailer");
 
 module.exports.signUp = function (req, res) {
   if (req.isAuthenticated()) {
@@ -43,10 +44,40 @@ module.exports.create = async (req, res) => {
 
     //create new user
     // create a new user
-    await User.create({
+    const newUser = await User.create({
       name,
       email,
       password: hashedPassword,
+    });
+
+    // create the email template
+    const emailTemplate = {
+      body: {
+        name: newUser.name,
+        intro:
+          "Welcome to Authentication app! We're very excited to have you on board.",
+        outro: "If you have any questions, feel free to reach out to us.",
+      },
+    };
+
+    // Generate the email template
+    const emailHTML = mailGenerator.generate(emailTemplate);
+
+    // Generate the email options
+    const emailOptions = {
+      from: process.env.EMAIL,
+      to: newUser.email,
+      subject: "Welcome to Authentication app!",
+      html: emailHTML,
+    };
+
+    // Send the email
+    transporter.sendMail(emailOptions, (error, info) => {
+      if (error) {
+        console.log("Error sending email:", error);
+      } else {
+        console.log("Email sent:", info.response);
+      }
     });
 
     // Success message and redirect
