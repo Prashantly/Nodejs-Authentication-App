@@ -1,0 +1,53 @@
+body {
+  background-image: url("/images/bg2.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh; /* Set the body height to 100% of the viewport height */
+  margin: 0; /* Remove any default margin */
+  padding: 0; /* Remove any default padding */
+}
+
+.field-holder {
+  position: relative;
+}
+
+.field-holder input {
+  padding: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  border: 1px solid #303030;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.5);
+  font-size: 18px;
+}
+
+.field-holder label {
+  position: absolute;
+  top: 0.57rem;
+  left: 0.73rem;
+  font-size: 1.16rem;
+  padding: 0 5px;
+  color: #666;
+  transition: 0.4s;
+  pointer-events: none;
+}
+
+.field-holder input:focus {
+  border: 1px solid #508bfc;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.field-holder input:focus ~ label,
+.field-holder input:valid ~ label {
+  top: -0.76rem;
+  font-size: 1rem;
+  color: #508bfc;
+  background-color: #fff;
+}
+
+.reset-btn {
+  width: 130px;
+  letter-spacing: 2px;
+}

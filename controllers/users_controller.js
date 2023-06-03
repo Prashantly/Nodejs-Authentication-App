@@ -109,7 +109,7 @@ module.exports.destroySession = function (req, res) {
   });
 };
 
-//forget password function
+//forgot password action
 module.exports.forgetPassword = async function (req, res) {
   try {
     const { email } = req.body;
@@ -136,7 +136,7 @@ module.exports.forgetPassword = async function (req, res) {
 
     // generate link from the token
     const link = `http://localhost:8000/users/reset-password/${user.id}/${token}`;
-    // console.log(link);
+    console.log(link);
 
     //create email template
     let emailTemplate = {
@@ -181,12 +181,101 @@ module.exports.forgetPassword = async function (req, res) {
       } else {
         //add req.flash
         req.flash("success", "An e-mail has been sent to " + user.email);
-        console.log("INFO--->", info);
+        // console.log("INFO--->", info);
         return res.redirect("back");
       }
     });
   } catch (err) {
     console.log(err);
     return;
+  }
+};
+
+//get reset password page
+module.exports.getResetPasswordPage = async function (req, res) {
+  const { userId, token } = req.params;
+
+  //check if this id exist in database
+  const user = await User.findOne({ _id: userId });
+
+  //if user not found
+  if (!user) {
+    // Send JSON response with appropriate error message
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  //if user is valid
+  const secret = process.env.JWT_SECRET + user.password;
+
+  try {
+    //verify token
+    const decoded = jwt.verify(token, secret);
+
+    // Render reset password page
+    return res.render("reset_password", {
+      title: "Auth app | Reset Password",
+      email: user.email,
+    });
+  } catch (err) {
+    //if verify is not successfull then render message
+    console.log(err.message);
+    return res.send(err.message);
+  }
+};
+
+//reset password
+module.exports.resetPassword = async function (req, res) {
+  const { userId, token } = req.params;
+
+  //extract password and confirm password from req.body
+  const { password, confirm_password } = req.body;
+
+  //check if this id exist in database
+  const user = await User.findOne({ _id: userId });
+
+  //if user not found
+  if (!user) {
+    // Send JSON response with appropriate error message
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  //if user is valid
+  const secret = process.env.JWT_SECRET + user.password;
+
+  try {
+    //verify token
+    const decoded = jwt.verify(token, secret);
+
+    // Password validation
+    if (password !== confirm_password) {
+      req.flash("error", "Passwords do not match");
+      return res.redirect("back");
+    }
+
+    //if password and confirm pasword matches then hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    //update password in database
+    let updateduser = await User.findByIdAndUpdate(
+      userId,
+      {
+        password: hashedPassword,
+      },
+      {
+        new: true,
+      }
+    );
+
+    if (!updateduser) {
+      req.flash("error", "SError updating password");
+      return res.redirect("back");
+    }
+
+    //req.flash
+    req.flash("success", "Password reset successfully, Kindly login now");
+    return res.redirect("/users/sign-in");
+  } catch (err) {
+    //if verify is not successfull then render message
+    console.log(err.message);
+    return res.send(err.message);
   }
 };
