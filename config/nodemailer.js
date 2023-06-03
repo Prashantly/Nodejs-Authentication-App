@@ -3,8 +3,8 @@ const Mailgen = require("mailgen");
 const nodemailer = require("nodemailer");
 const path = require("path");
 
-console.log(process.env.EMAIL);
-console.log(process.env.PASSWORD);
+// console.log(process.env.EMAIL);
+// console.log(process.env.PASSWORD);
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const mailGenerator = new Mailgen({
-  theme: "neopolitan",
+  theme: "salted",
   product: {
     name: "Authentication app",
     link: "http://localhost:8000",

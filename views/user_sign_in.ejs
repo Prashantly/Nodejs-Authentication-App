@@ -45,7 +45,11 @@
               </div>
 
               <p class="small mb-3 pb-lg-2">
-                <a class="text-primary-50 fs-5 fw-bold" href="#!"
+                <a
+                  class="text-primary-50 fs-5 fw-bold"
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#forgotPasswordModal"
                   >Forgot password?</a
                 >
               </p>
@@ -81,3 +85,71 @@
     </div>
   </div>
 </section>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="forgotPasswordModal"
+  tabindex="-1"
+  aria-labelledby="forgotPasswordModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title fw-bold" id="forgotPasswordModalLabel">
+          Forgot Password
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body d-flex flex-column">
+        <p class="mb-3">
+          Please enter your valid email address. You will receive a link to
+          create a new password via email.
+        </p>
+        <div class="my-3">
+          <form
+            action="/users/forget-password"
+            method="POST"
+            id="forgotPasswordForm"
+          >
+            <label for="email12" class="mb-2"
+              >Email Address<span style="color: red">*</span></label
+            >
+            <input
+              type="email"
+              name="email"
+              id="email12"
+              class="form-control"
+              placeholder="Email"
+              required
+            />
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="submitForgotPasswordBtn"
+        >
+          Get New Password
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document
+    .getElementById("submitForgotPasswordBtn")
+    .addEventListener("click", function (event) {
+      event.preventDefault();
+      document.getElementById("forgotPasswordForm").submit();
+    });
+</script>

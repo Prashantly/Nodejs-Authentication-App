@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const { transporter, mailGenerator } = require("../config/nodemailer");
 
 module.exports.signUp = function (req, res) {
@@ -106,4 +107,86 @@ module.exports.destroySession = function (req, res) {
     req.flash("success", "You are now signed out");
     return res.redirect("/");
   });
+};
+
+//forget password function
+module.exports.forgetPassword = async function (req, res) {
+  try {
+    const { email } = req.body;
+    // console.log(email);
+
+    //check whether email exist or not
+    const user = await User.findOne({ email });
+    if (!user) {
+      req.flash("error", "No account with that email address exists.");
+      return res.redirect("/users/sign-in");
+    }
+    //if user exists
+    // create secret
+    const secret = process.env.JWT_SECRET + user.password;
+    const payload = {
+      email: user.email,
+      id: user.id,
+    };
+
+    //create token
+    const token = jwt.sign(payload, secret, {
+      expiresIn: "15m",
+    });
+
+    // generate link from the token
+    const link = `http://localhost:8000/users/reset-password/${user.id}/${token}`;
+    // console.log(link);
+
+    //create email template
+    let emailTemplate = {
+      body: {
+        name: user.name,
+        intro:
+          "You have received this email because a password reset request for your account was received.",
+        action: {
+          instructions: "Click the button below to reset your password",
+          button: {
+            color: "#DC4D2F",
+            text: "Reset your password",
+            link: link,
+          },
+        },
+        outro:
+          "If you did not request a password reset, no further action is required on your part.",
+      },
+    };
+
+    const emailBody = mailGenerator.generate(emailTemplate);
+
+    // Generate the plaintext version of the e-mail (for clients that do not support HTML)
+    const emailText = mailGenerator.generatePlaintext(emailTemplate);
+
+    // Generate the email options
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: user.email,
+      subject: "Password reset",
+      html: emailBody,
+      text: emailText,
+    };
+
+    //send email
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.log(err);
+        //add req.flash
+        req.flash("error", "Error sending email");
+        return;
+      } else {
+        //add req.flash
+        req.flash("success", "An e-mail has been sent to " + user.email);
+        console.log("INFO--->", info);
+        return res.redirect("back");
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    return;
+  }
 };

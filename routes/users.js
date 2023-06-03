@@ -31,4 +31,6 @@ router.get(
   usersController.createSession
 );
 
+router.post("/forget-password", usersController.forgetPassword);
+
 module.exports = router;
