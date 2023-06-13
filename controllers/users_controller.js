@@ -21,6 +21,16 @@ module.exports.signIn = function (req, res) {
   });
 };
 
+module.exports.getReset = function (req, res) {
+  if (req.isAuthenticated()) {
+    return res.render("reset", {
+      title: "Auth App || Reset Password",
+    });
+  }
+
+  return res.redirect("/users/sign-in");
+};
+
 //get the the sign up data
 module.exports.create = async (req, res) => {
   try {
