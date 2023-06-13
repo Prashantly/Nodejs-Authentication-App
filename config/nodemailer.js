@@ -18,11 +18,12 @@ const mailGenerator = new Mailgen({
   theme: "salted",
   product: {
     name: "Authentication app",
-    link: "http://localhost:8000", //need to change this after deployment
+    link: "https://nodejs-authentication-app-ikrj.onrender.com",
   },
 });
+//localhost:8000
 
-module.exports = {
+http: module.exports = {
   transporter,
   mailGenerator,
 };
