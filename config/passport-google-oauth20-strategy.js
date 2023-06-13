@@ -2,9 +2,8 @@ const User = require("../models/user");
 const passport = require("passport");
 let GoogleStrategy = require("passport-google-oauth20").Strategy;
 const crypto = require("crypto");
-const GOOGLE_CLIENT_ID =
-  "512969332980-d667iiq64s2klca4qnq6ffbrljgi9r3j.apps.googleusercontent.com";
-const GOOGLE_CLIENT_SECRET = "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";
+const GOOGLE_CLIENT_ID = process.env.CONFIGURE_GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.CONFIGURE_GOOGLE_CLIENT_SECRET;
 
 // Tell passport to use new strategy for Google login
 passport.use(
@@ -12,15 +11,12 @@ passport.use(
     {
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:8000/users/auth/google/callback",
+      callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
     async function (accessToken, refreshToken, profile, done) {
       try {
         // Find user
         const user = await User.findOne({ email: profile.emails[0].value });
-
-        // console.log(accessToken, refreshToken);
-        // console.log(profile);
 
         if (user) {
           return done(null, user);
