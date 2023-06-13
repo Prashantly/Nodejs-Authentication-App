@@ -1,19 +1,24 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://127.0.0.1/Auth_app", {
+const url = process.env.MONGO_URL;
+
+const connectionParams = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
+};
 
-const db = mongoose.connection;
+let db;
 
-// Equivalent code without bind
-db.on("error", (error) => {
-  console.error("Error connecting to MongoDB", error);
-});
+const connectDB = async () => {
+  try {
+    await mongoose.connect(url, connectionParams);
+    db = mongoose.connection;
+    console.log("Database connection successfull.");
+  } catch (err) {
+    console.log(err);
+    console.error("Error in connecting to database!!!");
+  }
+};
 
-db.once("open", function () {
-  console.log("connected to Database : MongoDB");
-});
-
+connectDB();
 module.exports = db;

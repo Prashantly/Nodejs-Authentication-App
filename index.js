@@ -15,7 +15,7 @@ const customMware = require("./config/middleware");
 
 const app = express();
 
-const port = 8000;
+const port = process.env.PORT || 8000;
 
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -31,7 +31,7 @@ app.set("layout extractScripts", true);
 app.set("view engine", "ejs");
 app.set("views", "./views");
 
-const uri = "mongodb://127.0.0.1/Auth_app";
+const uri = process.env.MONGO_URL;
 
 const store = MongoStore.create({
   mongoUrl: uri,
@@ -43,7 +43,7 @@ const store = MongoStore.create({
 app.use(
   session({
     name: "Authentication",
-    secret: "nodeAuth",
+    secret: process.env.SESSION_SECRET,
     saveUninitialized: false, // don't create session until something stored
     resave: false, //don't save session if unmodified
     cookie: {
