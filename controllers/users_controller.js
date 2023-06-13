@@ -155,7 +155,8 @@ module.exports.forgetPassword = async function (req, res) {
         intro:
           "You have received this email because a password reset request for your account was received.",
         action: {
-          instructions: "Click the button below to reset your password",
+          instructions:
+            "Click the button below to reset your password and Note that below link only valid for 15 minutes",
           button: {
             color: "#DC4D2F",
             text: "Reset your password",
@@ -163,7 +164,7 @@ module.exports.forgetPassword = async function (req, res) {
           },
         },
         outro:
-          "If you did not request a password reset, no further action is required on your part.",
+          "If you did not request a password reset, no further action is required on your part",
       },
     };
 
