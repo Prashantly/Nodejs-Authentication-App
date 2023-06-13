@@ -145,7 +145,7 @@ module.exports.forgetPassword = async function (req, res) {
     });
 
     // generate link from the token
-    const link = `http://localhost:8000/users/reset-password/${user.id}/${token}`;
+    const link = `https://nodejs-authentication-app-ikrj.onrender.com/users/reset-password/${user.id}/${token}`;
     console.log(link);
 
     //create email template
