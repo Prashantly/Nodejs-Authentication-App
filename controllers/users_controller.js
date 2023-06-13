@@ -276,7 +276,7 @@ module.exports.resetPassword = async function (req, res) {
     );
 
     if (!updateduser) {
-      req.flash("error", "SError updating password");
+      req.flash("error", "Error updating password");
       return res.redirect("back");
     }
 
@@ -287,5 +287,55 @@ module.exports.resetPassword = async function (req, res) {
     //if verify is not successfull then render message
     console.log(err.message);
     return res.send(err.message);
+  }
+};
+
+//reset old password for user
+module.exports.resetCurrentPass = async (req, res) => {
+  try {
+    //get current_password,new_password, confirm_new_password
+    const { userId } = req.params;
+    const { current_password, new_password, confirm_new_password } = req.body;
+
+    if (new_password !== confirm_new_password) {
+      req.flash("error", "New password and confirm password does not match");
+      return res.redirect("back");
+    }
+
+    //check userId is exist in database or not
+    const user = await User.findById(userId);
+
+    if (!user) {
+      req.flash("error", "User not found");
+      return res.redirect("users/sign-in");
+    }
+
+    //user found check if current_password is matches with user password
+    const isMatch = await bcrypt.compare(current_password, user.password);
+
+    if (isMatch) {
+      //hash new password
+      const hashedPassword = await bcrypt.hash(new_password, 10);
+      //update user password
+      await User.findByIdAndUpdate(
+        userId,
+        {
+          password: hashedPassword,
+        },
+        {
+          new: true,
+        }
+      );
+
+      // Clear the existing user session if any
+      req.session.destroy();
+      return res.redirect("/users/sign-in");
+    }
+    req.flash("error", "Your current password is incorrect!!");
+    return res.redirect("back");
+  } catch (err) {
+    console.log(err.message);
+    req.flash("error", "Error in resetting password!!");
+    return res.redirect("back");
   }
 };

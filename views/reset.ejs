@@ -17,44 +17,44 @@
           "
         >
           <div class="card-body p-5 text-center" style="color: #05085ae6">
-            <h2 class="fw-bold mb-2">Hello <%= user.name%></h2>
+            <h2 class="fw-bold mb-2 text-capitalize">Hello <%= user.name%></h2>
             <p class="text-dark-50 my-4 fw-bold">
               Please enter your Old and new password for reset
             </p>
 
             <!-- form -->
-            <form action="" method="POST">
+            <form action="/users/<%=user.id%>/reset" method="POST">
               <div class="field-holder mb-4">
                 <input
                   type="password"
-                  id="password"
-                  name="password"
+                  id="current_password"
+                  name="current_password"
                   required
                   class="form-control"
                 />
-                <label for="password">Old Password</label>
+                <label for="current_password">Current Password</label>
               </div>
 
               <div class="field-holder mb-4">
                 <input
                   type="password"
-                  id="password"
-                  name="password"
+                  id="new_password"
+                  name="new_password"
                   required
                   class="form-control"
                 />
-                <label for="password">New Password</label>
+                <label for="new_password">New Password</label>
               </div>
 
               <div class="field-holder mb-4">
                 <input
                   type="password"
-                  id="confirm_password"
-                  name="confirm_password"
+                  id="confirm_new_password"
+                  name="confirm_new_password"
                   required
                   class="form-control"
                 />
-                <label for="confirm_password">Confirm New Password</label>
+                <label for="confirm_new_password">Confirm New Password</label>
               </div>
 
               <button
